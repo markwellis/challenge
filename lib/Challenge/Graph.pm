@@ -15,13 +15,13 @@ has name => (
 
 has nodes => (
     is       => 'ro',
-    required => 1,
     isa      => ArrayRef, #XXX make this array of Challenge::Graph::Node, and coerce
+    default  => sub { [] },
 );
 has edges => (
     is       => 'ro',
-    required => 1,
     isa      => ArrayRef, #XXX make this array of Challenge::Graph::Edge, and coerce
+    default  => sub { [] },
 );
 
 sub validate {

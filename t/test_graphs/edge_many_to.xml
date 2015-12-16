@@ -1,5 +1,6 @@
 <graph>
-    <name>graph with no id</name>
+    <id>valid</id>
+    <name>a valid graph</name>
     <nodes>
         <node>
             <id>a</id>
@@ -15,6 +16,7 @@
             <id>ab</id>
             <from>a</from>
             <to>b</to>
+            <to>a</to>
         </node>
     </edges>
 </graph>

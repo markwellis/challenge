@@ -4,6 +4,7 @@ use Types::Standard -types;
 
 use XML::Twig;
 use Challenge::Graph;
+use Scalar::Util qw/looks_like_number/;
 
 has xml => (
     is          => 'ro',
@@ -11,11 +12,10 @@ has xml => (
 );
 
 has graph => (
-    is  => 'ro',
-    lazy    => 1,
-    builder => '_build_graph',
-    #    isa => '' #XXX make this part
-
+    is          => 'ro',
+    builder     => '_build_graph',
+    init_arg    => undef,
+    lazy        => 1,
 );
 sub _build_graph {
     my $self = shift;
@@ -97,6 +97,8 @@ sub _build_graph {
 
         #cost must be >= 0
         my $edge_cost = $edge->field( 'cost' );
+        $die->( "cost should be a number", $twig )
+            if ( $edge_cost && !looks_like_number( $edge_cost ) );
         $die->( "cost can't be negative", $twig )
             if ( $edge_cost && ( $edge_cost < 0 ) );
 

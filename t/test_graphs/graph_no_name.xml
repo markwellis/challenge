@@ -1,5 +1,5 @@
 <graph>
-    <name>graph with no id</name>
+    <id>graph_id1</id>
     <nodes>
         <node>
             <id>a</id>
