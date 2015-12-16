@@ -1,0 +1,21 @@
+<graph>
+    <id>valid</id>
+    <name>a valid graph</name>
+    <nodes>
+        <node>
+            <id>a</id>
+            <name>A name</name>
+        </node>
+        <node>
+            <id>b</id>
+            <name>B name</name>
+        </node>
+    </nodes>
+    <edges>
+        <node>
+            <id>ab</id>
+            <from>a</from>
+            <to>b</to>
+        </node>
+    </edges>
+</graph>

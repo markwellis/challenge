@@ -43,61 +43,61 @@
         <node>
             <id>ab</id>
             <from>a</from>
-            <to>b</id>
+            <to>b</to>
         </node>
         <node>
             <id>ac</id>
             <from>a</from>
-            <to>c</id>
+            <to>c</to>
             <cost>35</cost>
         </node>
         <node>
             <id>bg</id>
             <from>b</from>
-            <to>g</id>
+            <to>g</to>
             <cost>40</cost>
         </node>
         <node>
             <id>be</id>
             <from>b</from>
-            <to>e</id>
+            <to>e</to>
         </node>
         <node>
             <id>cd</id>
             <from>c</from>
-            <to>d</id>
+            <to>d</to>
             <cost>0</cost>
         </node>
         <node>
             <id>ce</id>
             <from>c</from>
-            <to>e</id>
+            <to>e</to>
         </node>
         <node>
             <id>cf</id>
             <from>c</from>
-            <to>d</id>
+            <to>d</to>
             <cost>50</cost>
         </node>
         <node>
             <id>df</id>
             <from>d</from>
-            <to>f</id>
+            <to>f</to>
         </node>
         <node>
             <id>ea</id>
             <from>e</from>
-            <to>a</id>
+            <to>a</to>
         </node>
         <node>
             <id>fh</id>
             <from>f</from>
-            <to>h</id>
+            <to>h</to>
         </node>
         <node>
             <id>hi</id>
             <from>h</from>
-            <to>i</id>
+            <to>i</to>
         </node>
     </edges>
 </graph>

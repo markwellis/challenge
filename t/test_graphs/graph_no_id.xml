@@ -1,0 +1,20 @@
+<graph>
+    <name>graph with no id</name>
+    <nodes>
+        <node>
+            <id>a</id>
+            <name>A name</name>
+        </node>
+        <node>
+            <id>b</id>
+            <name>B name</name>
+        </node>
+    </nodes>
+    <edges>
+        <node>
+            <id>ab</id>
+            <from>a</from>
+            <to>b</id>
+        </node>
+    </edges>
+</graph>
