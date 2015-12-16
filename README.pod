@@ -1,0 +1,17 @@
+=head1 Challenge
+
+To use install vagrant (L<https://www.vagrantup.com/>) and virtualbox
+
+  vagrant up --provider virtualbox
+
+wait for provisioning to complete, then run the following to get a shell
+
+  vagrant ssh
+
+now you can run the challenge code
+
+  cd /vagrant
+
+XXX TODO
+
+=cut
