@@ -17,6 +17,7 @@ use Path::Tiny;
 
     ok $graph_xml->graph, "graph ok";
 
+    #this also tests that cycles are ignored
     is_deeply
         $graph_xml->graph->paths('a', 'c'),
         [["a", "b", "c"], ["a", "c"]],

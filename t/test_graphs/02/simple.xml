@@ -20,6 +20,7 @@
             <id>ab</id>
             <from>a</from>
             <to>b</to>
+            <cost>1</cost>
         </node>
         <node>
             <id>ac</id>
@@ -27,9 +28,14 @@
             <to>c</to>
         </node>
         <node>
-            <id>b</id>
+            <id>bc</id>
             <from>b</from>
             <to>c</to>
+        </node>
+        <node>
+            <id>ca</id>
+            <from>c</from>
+            <to>a</to>
         </node>
     </edges>
 </graph>
