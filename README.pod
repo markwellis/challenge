@@ -12,6 +12,25 @@ now you can run the challenge code
 
   cd /vagrant
 
-XXX TODO
+=head2 XML Parser
+
+I've chosen L<XML::Twig|https://metacpan.org/pod/XML::Twig> for XML parsing, as it's simple to use but is based on Expat
+so it's well tested and can be relied upon to produce the correct results, if used
+correctly!
+
+The interface can seem a little clunky at first, but the learning curve is low and
+overall this helps keep it maintainable.
+
+Another option was L<XML::LibXML|https://metacpan.org/pod/distribution/XML-LibXML/LibXML.pod>, but having used it before it's not something I'd chose
+to use again, and it seems like using a sledgehammer to crack a nut for this use case!
+
+Normally I'd use L<XML::Simple|https://metacpan.org/pod/XML::Simple>, but it's use is now
+discouraged as it's not really a good way of working with XML. This is the first time
+I've use XML::Twig, and I found it did a good job quickly.
+
+=head2 XML validation
+
+I've done some validation, both when parsing and when converting to objects, but the task
+could be helped with a DTD in the XML document
 
 =cut
