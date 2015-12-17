@@ -54,7 +54,7 @@ use Path::Tiny;
     eval {
         $graph_xml->graph;
     };
-    like $@, qr/need at least one node/i, "dies no nodes";
+    like $@, qr/missing required arguments: nodes/i, "dies no nodes";
 }
 {
     my $xml = path("$Bin/test_graphs/node_duplicate_id.xml")->slurp_utf8;
@@ -152,7 +152,9 @@ use Path::Tiny;
 
     #XXX make this work, needs edge object and stuff
     # it works, but there's no way to check atm
-    ok 0, "cost defaults to 0 if not provided";
+    foreach my $edge ( @{$graph_xml->graph->edges} ) {
+        is $edge->{cost}, 0, "cost defaults to 0 if not provided";
+    }
 }
 {
     my $xml = path("$Bin/test_graphs/valid_with_cost.xml")->slurp_utf8;

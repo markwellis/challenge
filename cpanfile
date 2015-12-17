@@ -6,7 +6,6 @@ requires 'Cpanel::JSON::XS';
 requires 'JSON::MaybeXS';
 
 requires 'Moo';
-requires 'Type::Tiny';
 
 test_requires 'Test::More';
 test_requires 'Path::Tiny';

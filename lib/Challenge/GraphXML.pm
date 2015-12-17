@@ -1,6 +1,5 @@
 package Challenge::GraphXML;
 use Moo;
-use Types::Standard -types;
 
 use XML::Twig;
 use Challenge::Graph;
@@ -136,7 +135,6 @@ sub _build_graph {
     #free the memory we used for parsing the xml
     $twig->purge;
 
-    #build Challenge::Graph (encapsulates & does more validation, e.g. checks for at least one node)
     return Challenge::Graph->new( $graph );
 }
 
