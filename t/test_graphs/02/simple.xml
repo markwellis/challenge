@@ -1,0 +1,35 @@
+<graph>
+    <id>simple</id>
+    <name>a simple graph</name>
+    <nodes>
+        <node>
+            <id>a</id>
+            <name>A name</name>
+        </node>
+        <node>
+            <id>b</id>
+            <name>B name</name>
+        </node>
+        <node>
+            <id>c</id>
+            <name>C name</name>
+        </node>
+    </nodes>
+    <edges>
+        <node>
+            <id>ab</id>
+            <from>a</from>
+            <to>b</to>
+        </node>
+        <node>
+            <id>ac</id>
+            <from>a</from>
+            <to>c</to>
+        </node>
+        <node>
+            <id>b</id>
+            <from>b</from>
+            <to>c</to>
+        </node>
+    </edges>
+</graph>
