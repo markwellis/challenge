@@ -52,15 +52,15 @@
             <cost>35</cost>
         </node>
         <node>
+            <id>be</id>
+            <from>b</from>
+            <to>e</to>
+        </node>
+        <node>
             <id>bg</id>
             <from>b</from>
             <to>g</to>
             <cost>40</cost>
-        </node>
-        <node>
-            <id>be</id>
-            <from>b</from>
-            <to>e</to>
         </node>
         <node>
             <id>cd</id>
@@ -76,7 +76,7 @@
         <node>
             <id>cf</id>
             <from>c</from>
-            <to>d</to>
+            <to>f</to>
             <cost>50</cost>
         </node>
         <node>
