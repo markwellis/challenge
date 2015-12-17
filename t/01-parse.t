@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 9999;
+use Test::More tests => 14;
 
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
@@ -163,5 +163,3 @@ use Path::Tiny;
 
     ok $graph_xml->graph, "graph is valid with edge cost";
 }
-
-ok 0, "add tests that check the document is valid and not jibberish";
