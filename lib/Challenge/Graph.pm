@@ -26,27 +26,26 @@ has edges => (
 
 finds the cheapest path from $start to $end
 
+returns an arrayref or false
+
 =cut
 sub cheapest {
     my ( $self, $start, $end ) = @_;
 
-    #could use an algorithm to search for the cheapest, but map/reduce will work
-    # and it'll do for this challenge... i hope!
+    #could use an algorithm to search for the cheapest, but we already have
+    # the data, so map/reduce will work well enough for this challenge... i hope!
     my @found_paths = $self->_find_paths( $start, $end );
 
-    my @paths;
-    foreach my $path ( @found_paths ) {
-        my $cost = sum map { $_->[1] } @$path;
-
-        push @paths, { path => [map { $_->[0] } @$path], cost => $cost };
-    }
-
     my $cheapest = reduce
-        { ( $a->{cost} < $b->{cost} ) ? $a->{path} : $b->{path} }
-        @paths;
+        { ( $a->{cost} < $b->{cost} ) ? $a : $b }
+        @found_paths;
 
+    my $path;
+    if ( $cheapest ) {
+        $path = $cheapest->{path};
+    }
     #!!0 is PL_sv_no, which means json encoding will be false, instead of 0.
-    return $cheapest || !!0;
+    return $path || !!0;
 }
 
 =head1 paths( $start, $end )
@@ -60,9 +59,8 @@ sub paths {
     my @found_paths = $self->_find_paths( $start, $end );
 
     my @paths;
-    #we don't care about costs here, so strip them out
-    foreach my $path ( @found_paths ) {
-        push @paths, [map { $_->[0] } @$path];
+    foreach my $found_path ( @found_paths ) {
+        push @paths, $found_path->{path};
     }
 
     \@paths;
@@ -72,6 +70,8 @@ sub paths {
 
 finds edges starting from $from
 
+returns an arrayref of pathparts
+
 =cut
 sub edges_starting {
     my ( $self, $from ) = @_;
@@ -80,56 +80,78 @@ sub edges_starting {
 }
 
 #internal method, finds all the edges in a path
-# returns an arrayref of arraryrefs which contain arrayrefs[$node_id, $cost)
-# e.g
+# returns an arrayref of hashrefs
+# e.g.
 # [
-#  [
-#   [
-#    'a',
-#    12
-#   ],
-#   [
-#    'b',
-#    0,
-#   ]
-#  ]
+#   {
+#     cost => 1,
+#     path => [
+#       "a",
+#       "b",
+#       "c"
+#     ]
+#   },
+#   {
+#     cost => 0,
+#     path => [
+#       "a",
+#       "c"
+#     ]
+#   }
 # ]
 sub _find_paths {
     my ( $self, $start, $end ) = @_;
 
     my @paths;
     foreach my $edge ( $self->edges_starting( $start ) ) {
-        my @resolved_path = $self->_resolve_path( $edge );
-        next if ( $resolved_path[-1]->[0] ne $end );
+        my @found_edges = $self->_search_edges( $edge, $end );
+        foreach my $edges ( @found_edges ) {
+            my @path;
+            my $cost = sum map { $_->{cost} } @$edges;
+            push @path, map { $_->{from} } @$edges;
 
-        push @paths, \@resolved_path;
+            #add in the final part of the path, that's not a "from" but a "to"
+            push @path, $edges->[-1]->{to};
+
+            push @paths, {
+                path    => \@path,
+                cost    => $cost
+            };
+        }
     }
 
     @paths;
 }
 
-#internal method, resolves a starting edge to a full path
-sub _resolve_path {
-    my ( $self, $edge ) = @_;
+#depth first search
+sub _search_edges {
+    my ( $self, $edge, $end, $seen, @path ) = @_;
 
-    #follow all edges from => to
-    #this doesn't work with branches
-    my @path = ( [$edge->{from}, $edge->{cost}] );
-    while ( $edge ) {
-        #ignore cycles
-        last if any { $_->[0] eq $edge->{to} } @path;
+    $seen //= {};
 
-        push @path, [$edge->{to}, $edge->{cost}];
-        my @edges = $self->edges_starting( $edge->{to} );
-        my $count = scalar @edges;
-
-        last if !$count;
-
-        #XXX this doesn't work with branches
-        $edge = $edges[0];
+    if ( $edge->{from} eq $end ) {
+        return \@path;
     }
 
-    @path;
+    #this could be the last part, so make sure it's in the path
+    push @path, $edge;
+    if ( $edge->{to} eq $end ) {
+        return \@path;
+    }
+
+    my @paths;
+
+    #record that we've seen this node
+    $seen->{ $edge->{from} }++;
+    foreach my $next_edge ( $self->edges_starting( $edge->{to} ) ) {
+        #prevent cycles if we've seen the node we're going to
+        next if $seen->{ $next_edge->{to} };
+
+        my @newpaths = $self->_search_edges( $next_edge, $end, $seen, @path );
+        push @paths, @newpaths;
+    }
+
+    @paths;
 }
 
 __PACKAGE__->meta->make_immutable;
