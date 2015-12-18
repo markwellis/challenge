@@ -1,5 +1,11 @@
 =head1 Challenge
 
+Hello, if you don't know what this is, it's not for you. If you do, hello.
+
+I've setup a basic vagrant, because that way you can jump straight in and run my
+code without having to deal with any issues that arise from differences in
+development environments.
+
 To use install vagrant (L<https://www.vagrantup.com/>) and virtualbox
 
   vagrant up --provider virtualbox
@@ -11,6 +17,13 @@ wait for provisioning to complete, then run the following to get a shell
 now you can run the challenge code
 
   cd /vagrant
+
+  #run the tests
+  carton exec -- prove -vl t/
+
+  #run the programs
+
+TODO!
 
 =head2 XML Parser
 
@@ -32,5 +45,42 @@ I've use XML::Twig, and I found it did a good job quickly.
 
 I've done some validation, both when parsing and when converting to objects, but the task
 could be helped with a DTD in the XML document
+
+=head2 JSON parsing
+
+I've used L<JSON::MaybeXS|https://metacpan.org/pod/JSON::MaybeXS> for several reasons,
+
+First off, it uses L<Cpanel::JSON::XS|https://metacpan.org/pod/Cpanel::JSON::XS> if available,
+which is an improved fork of L<JSON::XS|https://metacpan.org/pod/JSON::XS> and supported by
+Cpanel. Failing that it tries a number of fall backs, including JSON::XS
+
+Second, it makes the api far more perlish, which is always nice as it means less to learn.
+
+Third, it supports several JSON backends, so works on a wide range of systems (e.g no c compiler)
+
+=head2 The "are there any paths" problem
+
+I used a recursive depth first search because that's what came to mind when I saw the problem, and
+it's the usual way of traversing graphs.
+
+At first I tried to do it none recursive, but it was really late at night and my brain was no longer
+working correctly, so I abandoned it half way through to go to sleep. Then the next day I reworked it
+to be more sensible.
+
+I call the DFS from a helper sub and mangle the result into a more friendly format than the raw edge data
+which also contains the total cost of the path
+
+=head2 The "cheapest path" problem
+
+Since I already had the DFS return the path and costs, I use this and then reduce the data set to the one
+with the cheapest path.
+
+I was thinking of using Dijkstra's algorithm, but I'd already wrote the paths function and it was much easier
+to use that!
+
+I figured this would be ok, since in real life I'd never write graph code anyway, I'd use something like
+L<Graph|https://metacpan.org/pod/distribution/Graph/lib/Graph.pod> because it's better tested and supported
+and I could get on with the real task at hand! I didn't for this test as I know you're after seeing how I'd
+do something, and understand the problem, and not my ability to read documentation!
 
 =cut
