@@ -1,0 +1,6 @@
+[db]
+    dsn      = "dbi:Pg:dbname=challenge;host=localhost;"
+    username = "challenger"
+    password = "reallysecure"
+    [db.attrs]
+        pg_enable_utf8  = 1
