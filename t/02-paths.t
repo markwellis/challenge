@@ -5,13 +5,13 @@ use Test::More tests => 11;
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 
-use Challenge::GraphXML;
+use Challenge::Graph::XML;
 use Path::Tiny;
 
 {
     my $xml = path("$Bin/test_graphs/02/simple.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -39,7 +39,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/02/branched.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 

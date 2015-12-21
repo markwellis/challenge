@@ -1,14 +1,54 @@
-package Challenge::GraphXML;
+package Challenge::Graph::XML;
 use Moo;
 
 use XML::Twig;
 use Challenge::Graph;
 use Scalar::Util qw/looks_like_number/;
+use LWP::UserAgent;
+use Carp qw/croak/;
 
 has xml => (
     is          => 'ro',
     required    => 1,
 );
+
+has url => (
+    is      => 'ro',
+);
+
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $class = shift;
+
+    my $args = $class->$orig( @_ );
+
+    if ( !$args->{xml} && !$args->{url} ) {
+        croak "need xml or url\n";
+    }
+
+    if ( $args->{xml} && $args->{url} ) {
+        croak "can't have both xml and url\n";
+    }
+
+    if ( $args->{url} ) {
+        $args->{xml} = $class->_fetch( delete $args->{url} );
+    }
+
+    $args;
+};
+
+sub _fetch {
+    my ( $class, $url ) = @_;
+
+    my $ua = LWP::UserAgent->new;
+    my $response = $ua->get( $url );
+
+    if ( !$response->is_success ) {
+        die "failed to fetch $url", $response->status_line, "\n";
+    }
+
+    return $response->decoded_content;
+}
 
 has graph => (
     is          => 'ro',

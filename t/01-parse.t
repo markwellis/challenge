@@ -5,13 +5,13 @@ use Test::More tests => 14;
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 
-use Challenge::GraphXML;
+use Challenge::Graph::XML;
 use Path::Tiny;
 
 {
     my $xml = path("$Bin/test_graphs/01/graph_no_id.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -23,7 +23,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/graph_no_name.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -35,7 +35,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/no_nodes_has_edges.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -47,7 +47,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/no_nodes_no_edges.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -59,7 +59,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/node_duplicate_id.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -71,7 +71,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/edge_many_from.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -83,7 +83,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/edge_many_to.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -95,7 +95,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/edge_from_invalid_node.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -107,7 +107,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/edge_to_invalid_node.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -119,7 +119,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/invalid_cost_not_number.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -131,7 +131,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/invalid_cost_negative.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -144,7 +144,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/valid_no_cost.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 
@@ -157,7 +157,7 @@ use Path::Tiny;
 {
     my $xml = path("$Bin/test_graphs/01/valid_with_cost.xml")->slurp_utf8;
 
-    my $graph_xml = Challenge::GraphXML->new(
+    my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
     );
 

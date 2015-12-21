@@ -9,7 +9,7 @@ use LWP::UserAgent;
 use Getopt::Long;
 use DBI;
 use Config::ZOMG;
-use Challenge::GraphXML;
+use Challenge::Graph::XML;
 use Try::Tiny;
 
 my $config = Config::ZOMG->open(
@@ -30,8 +30,9 @@ main();
 $dbh->disconnect;
 
 sub main {
-    my $xml = fetch_xml( $options{xml_url} );
-    my $graph = parse_xml( $xml );
+    my $graph_xml = Challenge::Graph::XML->new( url => $options{xml_url} );
+    my $graph = $graph_xml->graph;
+
     save_graph( $graph );
 }
 
@@ -123,30 +124,4 @@ sub connect_to_db {
     );
 
     return $dbh;
-}
-
-sub fetch_xml {
-    my $url = shift;
-
-    say "fetching xml";
-    my $ua = LWP::UserAgent->new;
-    my $response = $ua->get( $url );
-
-    if ( !$response->is_success ) {
-        die "failed to fetch xml $url", $response->status_line, "\n";
-    }
-
-    return $response->decoded_content;
-}
-
-sub parse_xml {
-    my $xml = shift;
-
-    say "parsing xml";
-    #this will die if the xml is invalid
-    my $graph_xml = Challenge::GraphXML->new(
-        xml => $xml,
-    );
-
-    return $graph_xml->graph;
 }
