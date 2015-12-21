@@ -1,127 +1,48 @@
 use strict;
 use warnings;
-use v5.10;
 
 use FindBin qw/$Bin/;
 use lib "$Bin/../lib";
 
-use LWP::UserAgent;
 use Getopt::Long;
-use DBI;
 use Config::ZOMG;
-use Challenge::Graph::XML;
-use Try::Tiny;
 
+use Challenge::Graph::XML;
+use Challenge::Graph::DB;
+
+#no one likes hard-coded config options
 my $config = Config::ZOMG->open(
     name => 'challenge',
     path => "$Bin/..",
 ) || die "couldn't load config file\n";
 
-my %options;
+my %opt;
 GetOptions (
-    \%options,
+    \%opt,
     "xml_url=s",
     "replace",
+    "verbose|v",
 ) || die "need xml_url\n";
 
-my $dbh = connect_to_db( $config->{db} );
-
-main();
-$dbh->disconnect;
-
-sub main {
-    my $graph_xml = Challenge::Graph::XML->new( url => $options{xml_url} );
-    my $graph = $graph_xml->graph;
-
-    save_graph( $graph );
+#the prototype means it accepts 1 scalar and doesn't need parenthesis
+sub info ($) {
+    print "$_[0]\n" if $opt{verbose};
 }
 
-sub graph_exists {
-    my $graph = shift;
+info "loading url";
+my $graph_xml = Challenge::Graph::XML->new( url => $opt{xml_url} );
 
-    my $sth = $dbh->prepare( 'SELECT 1 FROM "graphs" WHERE "id" = ?' ) ;
-    $sth->execute( $graph->id );
+info "parsing xml";
+my $graph = $graph_xml->graph;
 
-    if ( $sth->rows ) {
-        return 1;
-    }
+info "connecting to db";
+my $graph_db = Challenge::Graph::DB->new( $config->{db} );
 
-    return;
+if ( $opt{replace} ) {
+    info "replacing " . $graph->id;
+    $graph_db->replace( $graph );
 }
-
-sub delete_existing_graph {
-    my $graph = shift;
-
-    my $delete_edges = $dbh->prepare( 'DELETE FROM "edges" WHERE "graph_id" = ?' ) ;
-    my $delete_nodes = $dbh->prepare( 'DELETE FROM "nodes" WHERE "graph_id" = ?' ) ;
-    my $delete_graph = $dbh->prepare( 'DELETE FROM "graphs" WHERE "id" = ?' ) ;
-
-    $delete_edges->execute( $graph->id );
-    $delete_nodes->execute( $graph->id );
-    $delete_graph->execute( $graph->id );
-}
-
-sub save_graph {
-    my $graph = shift;
-
-    try {
-        if ( graph_exists( $graph ) ) {
-            if ( $options{replace} ) {
-                say "deleting existing graph ", $graph->id;
-                delete_existing_graph( $graph );
-            }
-            else {
-                die "graph ", $graph->id, " already exists\n";
-            }
-        }
-
-        #prepare some statements
-        my $insert_graph = $dbh->prepare(
-            'INSERT INTO "graphs" ( "id", "name" ) VALUES ( ?, ? )'
-        );
-        my $insert_node = $dbh->prepare(
-            'INSERT INTO "nodes" ( "graph_id", "id", "name" ) VALUES ( ?, ?, ? )'
-        );
-        my $insert_edge = $dbh->prepare(
-            'INSERT INTO "edges" ( "graph_id", "id", "to", "from", "cost" ) VALUES ( ?, ?, ?, ?, ? )'
-        );
-
-        say "saving graph ", $graph->id;
-
-        #insert
-        $insert_graph->execute( $graph->id, $graph->name );
-        foreach my $node ( @{$graph->nodes} ) {
-            $insert_node->execute( $graph->id, $node->{id}, $node->{name} );
-        }
-        foreach my $edge ( @{$graph->edges} ) {
-            $insert_edge->execute( $graph->id, $edge->{id}, $edge->{to}, $edge->{from}, $edge->{cost} );
-        }
-
-        $dbh->commit;
-    }
-    catch {
-        $dbh->rollback   or die $dbh->errstr;
-        die "insert failed: $_";
-    };
-}
-
-sub connect_to_db {
-    my $options = shift;
-
-    #usually, I'd use the DBIx::Class ORM, because it makes dealing
-    # with the db far simpler, but it'll overcomplicate things
-    my $attrs = {
-        %{$options->{attrs}},
-        RaiseError => 1,        #so we can handle errors better
-        AutoCommit => 0,        #recommended
-    };
-
-    my $dbh = DBI->connect(
-        $options->{dsn},
-        $options->{username},
-        $options->{password},
-        $attrs,
-    );
-
-    return $dbh;
+else {
+    info "saving " . $graph->id;
+    $graph_db->save( $graph );
 }
