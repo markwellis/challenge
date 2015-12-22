@@ -1,0 +1,103 @@
+<graph>
+    <id>g1</id>
+    <name>The Graph Name</name>
+    <nodes>
+        <node>
+            <id>a</id>
+            <name>A name</name>
+        </node>
+        <node>
+            <id>b</id>
+            <name>B name</name>
+        </node>
+        <node>
+            <id>c</id>
+            <name>C name</name>
+        </node>
+        <node>
+            <id>d</id>
+            <name>D name</name>
+        </node>
+        <node>
+            <id>e</id>
+            <name>E name</name>
+        </node>
+        <node>
+            <id>f</id>
+            <name>F name</name>
+        </node>
+        <node>
+            <id>g</id>
+            <name>G name</name>
+        </node>
+        <node>
+            <id>h</id>
+            <name>H name</name>
+        </node>
+        <node>
+            <id>i</id>
+            <name>I name</name>
+        </node>
+    </nodes>
+    <edges>
+        <node>
+            <id>ab</id>
+            <from>a</from>
+            <to>b</to>
+        </node>
+        <node>
+            <id>ac</id>
+            <from>a</from>
+            <to>c</to>
+            <cost>35</cost>
+        </node>
+        <node>
+            <id>be</id>
+            <from>b</from>
+            <to>e</to>
+        </node>
+        <node>
+            <id>bg</id>
+            <from>b</from>
+            <to>g</to>
+            <cost>40</cost>
+        </node>
+        <node>
+            <id>cd</id>
+            <from>c</from>
+            <to>d</to>
+            <cost>0</cost>
+        </node>
+        <node>
+            <id>ce</id>
+            <from>c</from>
+            <to>e</to>
+        </node>
+        <node>
+            <id>cf</id>
+            <from>c</from>
+            <to>f</to>
+            <cost>50</cost>
+        </node>
+        <node>
+            <id>df</id>
+            <from>d</from>
+            <to>f</to>
+        </node>
+        <node>
+            <id>ea</id>
+            <from>e</from>
+            <to>a</to>
+        </node>
+        <node>
+            <id>fh</id>
+            <from>f</from>
+            <to>h</to>
+        </node>
+        <node>
+            <id>hi</id>
+            <from>h</from>
+            <to>i</to>
+        </node>
+    </edges>
+</graph>

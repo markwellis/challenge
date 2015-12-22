@@ -44,8 +44,8 @@ sub cheapest {
     if ( $cheapest ) {
         $path = $cheapest->{path};
     }
-    #!!0 is PL_sv_no, which means json encoding will be false, instead of 0.
-    return $path || !!0;
+
+    return $path;
 }
 
 =head1 paths( $start, $end )

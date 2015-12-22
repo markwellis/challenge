@@ -49,9 +49,51 @@ sub DEMOLISH {
 }
 
 sub load {
-    my ( $self, $graph ) = @_;
+    my ( $self, $graph_id ) = @_;
 
-    die "unimplimented";
+    #DBIx::Class would have made this so much easier, but I think it might be cheating...
+    my $sth = $self->dbh->prepare(
+        'SELECT
+            graphs.id, graphs.name, nodes.id, nodes.name, edges.id, edges.to, edges.from, edges.cost
+        FROM graphs
+            LEFT JOIN nodes ON ( graphs.id = nodes.graph_id )
+            LEFT JOIN edges ON ( graphs.id = edges.graph_id )
+        WHERE graphs.id = ?'
+    ) ;
+    $sth->execute( $graph_id );
+
+    my $graph_raw = {
+        nodes   => {},
+        edges   => {},
+    };
+
+    #all nodes and edges have a unique id, so this will work
+    foreach my $row ( @{$sth->fetchall_arrayref} ) {
+        $graph_raw->{id} //= $row->[0];
+        $graph_raw->{name} //= $row->[1];
+        $graph_raw->{nodes}->{ $row->[2] } //= {
+            id      => $row->[2],
+            name    => $row->[3],
+        };
+        $graph_raw->{edges}->{ $row->[4] } //= {
+            id      => $row->[4],
+            to      => $row->[5],
+            from    => $row->[6],
+            cost    => $row->[7],
+        };
+    }
+
+    my @nodes = values %{$graph_raw->{nodes}};
+    my @edges = values %{$graph_raw->{edges}};
+use Data::Dumper::Concise;
+warn Dumper( \@edges );;
+
+    return Challenge::Graph->new(
+        id    => $graph_raw->{id},
+        name  => $graph_raw->{name},
+        nodes => \@nodes,
+        edges => \@edges,
+    );
 }
 
 sub exists {
