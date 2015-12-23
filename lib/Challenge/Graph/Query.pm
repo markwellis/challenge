@@ -1,77 +1,72 @@
 package Challenge::Graph::Query;
 use Moo;
+use Challenge::Graph::DB;
+use Types::Serialiser;
 
-use Challenge::Graph::Query::Path;
-use Challenge::Graph::Query::Cheapest;
-use JSON::MaybeXS qw//;
-use Types::Standard qw/ArrayRef HashRef/;
-use JSON::Schema;
-
-has json => (
+has db_config => (
     is       => 'ro',
-    init_arg => 'json',
     required => 1,
-    coerce   => sub {
-        my $json = shift;
-
-        #isa checks are not ran for coerce, so we have to validate here
-        my $schema = {
-            '$schema'  => "http://json-schema.org/draft-04/schema#",
-            type       => 'object',
-            properties => {
-                queries => {
-                    type            => 'array',
-                    items           => { '$ref' => "#/definitions/query" },
-                    additionalItems => { '$ref' => "#/definitions/query" },
-                },
-            },
-            definitions => {
-                query => {
-                    type       => 'object',
-                    properties => {
-                        graph_id => { type   => "string" },
-                        paths    => { '$ref' => "#/definitions/start_end" },
-                        cheapest => { '$ref' => "#/definitions/start_end" },
-                        required => [ qw/graph_id/ ],
-                    }
-                },
-                start_end => {
-                    type       => 'object',
-                    properties => {
-                        start => { type => 'string' },
-                        end   => { type => 'string' },
-                    },
-                    required => [ qw/start end/ ],
-                }
-            },
-            required => [ qw/queries/ ],
-        };
-
-        my $validator = JSON::Schema->new( $schema );
-        my $valid = $validator->validate( $json );
-
-        if ( $valid ) {
-            return JSON::MaybeXS::decode_json( $json );
-        }
-
-        my $errors = join "\n  ", $valid->errors;
-        die "invalid json format\n  $errors\n";
-    },
 );
-
-has queries => (
+has db => (
     is      => 'ro',
-    isa     => ArrayRef,
     lazy    => 1,
-    builder => '_build_queries',
+    builder => '_build_db',
 );
-sub _build_queries {
+sub _build_db {
     my $self = shift;
 
-    foreach my $query ( @{$self->json->queries} ) {
-use Data::Dumper::Concise;
-warn Dumper( $query );
+    return Challenge::Graph::DB->new( $self->db_config );
+}
+
+sub queries {
+    die "should be implimented by subclass";
+}
+sub graph_id {
+    die "should be implimented by subclass";
+}
+sub answers {
+    die "should be implimented by subclass";
+}
+
+#some output formats (JSON) has true booleans, but perl doesn't
+# so make this overridable
+sub false { 0 }
+sub _solve {
+    my $self = shift;
+
+    my $graph = $self->db->load( $self->graph_id );
+
+    my @answers;
+    foreach my $queries ( @{$self->queries} ) {
+        foreach my $query ( @{$queries} ) {
+            if ( $query->method eq 'cheapest' ) {
+                my $result = $graph->cheapest( $query->start, $query->end );
+
+                my $answer = {
+                    cheapest => {
+                        path  => $result || $self->false,
+                        from  => $query->start,
+                        to    => $query->end,
+                    }
+                };
+
+                push @answers, $answer;
+            }
+            if ( $query->method eq 'paths' ) {
+                my $result = $graph->paths( $query->start, $query->end );
+                my $answer = {
+                    paths => {
+                        paths => $result,
+                        from  => $query->start,
+                        to    => $query->end,
+                    }
+                };
+                push @answers, $answer;
+            }
+        }
     }
+
+    return\@answers;
 }
 
 __PACKAGE__->meta->make_immutable;

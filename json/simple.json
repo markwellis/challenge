@@ -1,21 +1,19 @@
 {
-   "queries": [
+    "graph_id" : "g0",
+    "queries": [
        {
-           "graph_id" : "g0",
            "paths" : {
                "start" : "a",
                "end"   : "e"
            }
        },
        {
-           "graph_id" : "g0",
            "cheapest" : {
-               "start" : "a",
+               "start" : "t",
                "end"   : "g"
            }
        },
        {
-           "graph_id" : "g0",
            "paths"    : {
               "start"  : "c",
               "end"    : "a"

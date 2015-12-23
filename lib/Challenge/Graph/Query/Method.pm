@@ -1,16 +1,22 @@
-package Challenge::Graph::Query::Cheapest;
+package Challenge::Graph::Query::Method;
 use Moo;
+use Types::Standard qw/Str/;
 
-has graph_id => (
+has method => (
     is          => 'ro',
+    isa         => Str,
     required    => 1,
 );
+
 has start => (
     is          => 'ro',
+    isa         => Str,
     required    => 1,
 );
+
 has end => (
     is          => 'ro',
+    isa         => Str,
     required    => 1,
 );
 

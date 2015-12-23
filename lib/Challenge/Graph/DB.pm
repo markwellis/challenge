@@ -85,8 +85,6 @@ sub load {
 
     my @nodes = values %{$graph_raw->{nodes}};
     my @edges = values %{$graph_raw->{edges}};
-use Data::Dumper::Concise;
-warn Dumper( \@edges );;
 
     return Challenge::Graph->new(
         id    => $graph_raw->{id},
