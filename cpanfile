@@ -5,6 +5,7 @@ requires 'XML::Twig';
 
 requires 'Cpanel::JSON::XS';
 requires 'JSON::MaybeXS';
+requires 'JSON::Schema';
 
 requires 'Moo';
 
@@ -15,6 +16,7 @@ requires 'Getopt::Long';
 requires 'Config::ZOMG';
 requires 'Config::Any::TOML';
 requires 'Try::Tiny';
+requires 'Type::Tiny';
 
 test_requires 'Test::More';
 test_requires 'Path::Tiny';

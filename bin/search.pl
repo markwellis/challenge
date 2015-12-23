@@ -6,8 +6,8 @@ use lib "$Bin/../lib";
 
 use Config::ZOMG;
 
-use JSON::MaybeXS;
 use Challenge::Graph::DB;
+use Challenge::Graph::Query;
 
 #no one likes hard-coded config options
 my $config = Config::ZOMG->open(
@@ -15,26 +15,19 @@ my $config = Config::ZOMG->open(
     path => "$Bin/..",
 ) || die "couldn't load config file\n";
 
-my $json_encoder = JSON::MaybeXS->new(utf8 => 1);
 
 my $stdin = join "", <>;
-my $json = $json_encoder->decode( $stdin );
+my $query = Challenge::Graph::Query->new(
+    json => $stdin,
+);
 
-#must be at least one queries
-# query must have a graph id
-# query must have a cheapest or path
-die "not an object\n" if ref $json ne 'HASH';
-die "no queries provided\n"
-    if !exists $json->{queries};
-die "queries needs to be an array\n"
-    if ref $json->{queries} ne 'ARRAY';
-die "there needs to be at least one query\n"
-    if !scalar @{$json->{queries}};
-
-my %graph_cache;
 print "connecting to db\n";
 my $graph_db = Challenge::Graph::DB->new( $config->{db} );
 
+my %graph_cache;
+use Data::Dumper::Concise;
+warn Dumper( $query );
+__DATA__
 my @answers;
 foreach my $query ( @{$json->{queries}} ) {
     die "query needs to be an object\n"

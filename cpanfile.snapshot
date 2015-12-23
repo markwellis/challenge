@@ -256,6 +256,14 @@ DISTRIBUTIONS
       perl 5.008001
       strict 0
       warnings 0
+  Exporter-Tiny-0.042
+    pathname: T/TO/TOBYINK/Exporter-Tiny-0.042.tar.gz
+    provides:
+      Exporter::Shiny 0.042
+      Exporter::Tiny 0.042
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      perl 5.006001
   ExtUtils-Config-0.008
     pathname: L/LE/LEONT/ExtUtils-Config-0.008.tar.gz
     provides:
@@ -364,6 +372,17 @@ DISTRIBUTIONS
       ExtUtils::MakeMaker 0
       Time::Local 0
       perl 5.006002
+  HTTP-Link-Parser-0.200
+    pathname: T/TO/TOBYINK/HTTP-Link-Parser-0.200.tar.gz
+    provides:
+      HTTP::Link::Parser 0.200
+      HTTP::Link::Parser::PlainLiteral undef
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      HTTP::Message 0
+      URI 0
+      URI::Escape 0
+      perl 5.010
   HTTP-Message-6.11
     pathname: E/ET/ETHER/HTTP-Message-6.11.tar.gz
     provides:
@@ -440,6 +459,29 @@ DISTRIBUTIONS
       Mozilla::CA 0
       Net::SSLeay 1.46
       Scalar::Util 0
+  JSON-2.90
+    pathname: M/MA/MAKAMAKA/JSON-2.90.tar.gz
+    provides:
+      JSON 2.90
+      JSON::Backend::PP 2.90
+      JSON::Boolean 2.90
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test::More 0
+  JSON-Hyper-0.011
+    pathname: T/TO/TOBYINK/JSON-Hyper-0.011.tar.gz
+    provides:
+      JSON::Hyper 0.011
+      JSON::Hyper::Link 0.011
+    requirements:
+      ExtUtils::MakeMaker 6.59
+      JSON 2.00
+      JSON::Path 0
+      LWP::UserAgent 0
+      Test::More 0.61
+      URI 1.30
+      URI::Escape 0
+      perl 5.008
   JSON-MaybeXS-1.003005
     pathname: E/ET/ETHER/JSON-MaybeXS-1.003005.tar.gz
     provides:
@@ -454,6 +496,44 @@ DISTRIBUTIONS
       JSON::PP 2.27202
       Scalar::Util 0
       perl 5.006
+  JSON-Path-0.205
+    pathname: T/TO/TOBYINK/JSON-Path-0.205.tar.gz
+    provides:
+      JSON::Path 0.205
+      JSON::Path::Helper 0.205
+    requirements:
+      Exporter::Tiny 0
+      ExtUtils::MakeMaker 6.17
+      JSON 2.00
+      LV 0
+  JSON-Schema-0.016
+    pathname: T/TO/TOBYINK/JSON-Schema-0.016.tar.gz
+    provides:
+      JSON::Schema 0.016
+      JSON::Schema::Error 0.016
+      JSON::Schema::Helper 0.016
+      JSON::Schema::Null 0.016
+      JSON::Schema::Result 0.016
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      HTTP::Link::Parser 0.100
+      JSON 2.00
+      JSON::Hyper 0
+      JSON::Path 0
+      LWP::UserAgent 0
+      autovivification 0
+      match::simple 0
+  LV-0.006
+    pathname: T/TO/TOBYINK/LV-0.006.tar.gz
+    provides:
+      LV 0.006
+      LV::Backend::Magic 0.006
+      LV::Backend::Sentinel 0.006
+      LV::Backend::Tie 0.006
+      LV::Backend::Tie::TiedScalar 0.006
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      perl 5.006000
   LWP-MediaTypes-6.02
     pathname: G/GA/GAAS/LWP-MediaTypes-6.02.tar.gz
     provides:
@@ -678,6 +758,14 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       Test::More 0.88
+  Sub-Infix-0.004
+    pathname: T/TO/TOBYINK/Sub-Infix-0.004.tar.gz
+    provides:
+      Sub::Infix 0.004
+      Sub::Infix::PartialApplication undef
+    requirements:
+      ExtUtils::MakeMaker 6.17
+      perl 5.006
   Sub-Uplevel-0.25
     pathname: D/DA/DAGOLDEN/Sub-Uplevel-0.25.tar.gz
     provides:
@@ -836,6 +924,59 @@ DISTRIBUTIONS
       Exporter 0
       ExtUtils::MakeMaker 0
       perl 5.006
+  Try-Tiny-0.24
+    pathname: E/ET/ETHER/Try-Tiny-0.24.tar.gz
+    provides:
+      Try::Tiny 0.24
+    requirements:
+      Carp 0
+      Exporter 5.57
+      ExtUtils::MakeMaker 0
+      constant 0
+      perl 5.006
+      strict 0
+      warnings 0
+  Type-Tiny-1.000005
+    pathname: T/TO/TOBYINK/Type-Tiny-1.000005.tar.gz
+    provides:
+      Devel::TypeTiny::Perl56Compat 1.000005
+      Devel::TypeTiny::Perl58Compat 1.000005
+      Error::TypeTiny 1.000005
+      Error::TypeTiny::Assertion 1.000005
+      Error::TypeTiny::Compilation 1.000005
+      Error::TypeTiny::WrongNumberOfParameters 1.000005
+      Eval::TypeTiny 1.000005
+      Reply::Plugin::TypeTiny 1.000005
+      Test::TypeTiny 1.000005
+      Type::Coercion 1.000005
+      Type::Coercion::FromMoose 1.000005
+      Type::Coercion::Union 1.000005
+      Type::Library 1.000005
+      Type::Params 1.000005
+      Type::Parser 1.000005
+      Type::Registry 1.000005
+      Type::Tiny 1.000005
+      Type::Tiny::Class 1.000005
+      Type::Tiny::Duck 1.000005
+      Type::Tiny::Enum 1.000005
+      Type::Tiny::Intersection 1.000005
+      Type::Tiny::Role 1.000005
+      Type::Tiny::Union 1.000005
+      Type::Utils 1.000005
+      Types::Common::Numeric 1.000005
+      Types::Common::String 1.000005
+      Types::Standard 1.000005
+      Types::Standard::ArrayRef 1.000005
+      Types::Standard::Dict 1.000005
+      Types::Standard::HashRef 1.000005
+      Types::Standard::Map 1.000005
+      Types::Standard::ScalarRef 1.000005
+      Types::Standard::Tuple 1.000005
+      Types::TypeTiny 1.000005
+    requirements:
+      Exporter::Tiny 0.026
+      ExtUtils::MakeMaker 6.17
+      perl 5.006001
   Types-Serialiser-1.0
     pathname: M/ML/MLEHMANN/Types-Serialiser-1.0.tar.gz
     provides:
@@ -951,6 +1092,18 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       XML::Parser 2.23
+  autovivification-0.16
+    pathname: V/VP/VPIT/autovivification-0.16.tar.gz
+    provides:
+      autovivification 0.16
+    requirements:
+      Config 0
+      Exporter 0
+      ExtUtils::MakeMaker 0
+      POSIX 0
+      Test::More 0
+      XSLoader 0
+      perl 5.008003
   common-sense-3.74
     pathname: M/ML/MLEHMANN/common-sense-3.74.tar.gz
     provides:
@@ -1014,3 +1167,15 @@ DISTRIBUTIONS
       URI::Escape 0
       WWW::RobotRules 6
       perl 5.008001
+  match-simple-0.009
+    pathname: T/TO/TOBYINK/match-simple-0.009.tar.gz
+    provides:
+      match::simple 0.009
+      match::smart 0.009
+    requirements:
+      Exporter::Tiny 0.026
+      ExtUtils::MakeMaker 6.17
+      List::Util 1.33
+      Scalar::Util 0
+      Sub::Infix 0.004
+      perl 5.006001
