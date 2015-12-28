@@ -1,6 +1,7 @@
 package Challenge::Graph;
 use Moo;
 use List::Util qw/first any sum reduce/;
+use Types::Standard qw/ArrayRef/;
 
 has name => (
     is       => 'ro',
@@ -13,12 +14,12 @@ has id => (
 has nodes => (
     is       => 'ro',
     required => 1,
-    isa      => sub { die "not an arrayref" if !ref $_ eq 'ARRAY' },
+    isa      => ArrayRef,
 );
 has edges => (
     is       => 'ro',
     required => 1,
-    isa      => sub { die "not an arrayref" if !ref $_ eq 'ARRAY' },
+    isa      => ArrayRef,
     default  => sub { [] },
 );
 

@@ -4,7 +4,6 @@ use Moo;
 use DBI;
 use Try::Tiny;
 use Challenge::Graph;
-use Carp qw/croak/;
 
 has dsn => ( is => 'ro', required => 1 );
 has username => ( is => 'ro', required => 1 );
@@ -188,6 +187,5 @@ sub save {
         }
     };
 }
-
 
 __PACKAGE__->meta->make_immutable;
