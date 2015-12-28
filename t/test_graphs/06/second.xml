@@ -1,0 +1,41 @@
+<graph>
+    <id>test</id>
+    <name>second test graph</name>
+    <nodes>
+        <node>
+            <id>a</id>
+            <name>A name</name>
+        </node>
+        <node>
+            <id>b</id>
+            <name>B name</name>
+        </node>
+        <node>
+            <id>c</id>
+            <name>C name</name>
+        </node>
+    </nodes>
+    <edges>
+        <node>
+            <id>ba</id>
+            <from>b</from>
+            <to>a</to>
+            <cost>1</cost>
+        </node>
+        <node>
+            <id>bc</id>
+            <from>b</from>
+            <to>c</to>
+        </node>
+        <node>
+            <id>ca</id>
+            <from>c</from>
+            <to>a</to>
+        </node>
+        <node>
+            <id>cb</id>
+            <from>c</from>
+            <to>b</to>
+        </node>
+    </edges>
+</graph>

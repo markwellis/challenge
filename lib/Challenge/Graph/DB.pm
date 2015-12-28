@@ -42,7 +42,7 @@ sub DEMOLISH {
     my $self = shift;
 
     #close db connection
-    if ( $self->_has_dbh ) {
+    if ( $self->_has_dbh && $self->dbh ) {
         $self->dbh->disconnect;
     }
 }
@@ -60,6 +60,7 @@ sub load {
         WHERE graphs.id = ?'
     ) ;
     $sth->execute( $graph_id );
+    return if !$sth->rows;
 
     my $graph_raw = {
         nodes   => {},
@@ -113,7 +114,7 @@ sub replace {
         #localise this so that we don't commit after deleting,
         # or rollback elsewhere of there's an error
         local $_NO_COMMIT = 1;
-        $self->delete( $graph ) if $self->exists( $graph );
+        $self->delete( $graph->id ) if $self->exists( $graph );
         $self->save( $graph );
 
         $self->dbh->commit;
@@ -125,16 +126,16 @@ sub replace {
 }
 
 sub delete {
-    my ( $self, $graph ) = @_;
+    my ( $self, $graph_id ) = @_;
 
     try {
         my $delete_edges = $self->dbh->prepare( 'DELETE FROM "edges" WHERE "graph_id" = ?' ) ;
         my $delete_nodes = $self->dbh->prepare( 'DELETE FROM "nodes" WHERE "graph_id" = ?' ) ;
         my $delete_graph = $self->dbh->prepare( 'DELETE FROM "graphs" WHERE "id" = ?' ) ;
 
-        $delete_edges->execute( $graph->id );
-        $delete_nodes->execute( $graph->id );
-        $delete_graph->execute( $graph->id );
+        $delete_edges->execute( $graph_id );
+        $delete_nodes->execute( $graph_id );
+        $delete_graph->execute( $graph_id );
 
         $self->dbh->commit if !$_NO_COMMIT;
     }
