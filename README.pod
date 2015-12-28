@@ -21,9 +21,16 @@ now you can run the challenge code
   #run the tests
   carton exec -- prove -vl t/
 
-  #run the programs
+  #import xml from a url into the db
+  carton exec -- perl bin/import.pl --xml_url https://raw.githubusercontent.com/markwellis/challenge/master/xml/g0.xml  --verbose
 
-TODO!
+  #get some answers
+  cat json/simple.json | carton exec perl -I lib bin/search.pl
+
+=head2 JSON queries
+
+Since it's not clear, and I've added a "graph_id" to the incoming JSON request,
+so that it knows which graph to search
 
 =head2 XML Parser
 
@@ -75,12 +82,25 @@ which also contains the total cost of the path
 Since I already had the DFS return the path and costs, I use this and then reduce the data set to the one
 with the cheapest path.
 
-I was thinking of using Dijkstra's algorithm, but I'd already wrote the paths function and it was much easier
-to use that!
+I was thinking of using A* search/Dijkstra's algorithm, but I'd already wrote the paths function and it was
+much easier to use that!
 
 I figured this would be ok, since in real life I'd never write graph code anyway, I'd use something like
 L<Graph|https://metacpan.org/pod/distribution/Graph/lib/Graph.pod> because it's better tested and supported
 and I could get on with the real task at hand! I didn't for this test as I know you're after seeing how I'd
 do something, and understand the problem, and not my ability to read documentation!
+
+=head2 SQL
+
+In the sql/ dir you'll find "create.sql" which is the postgres schema I created
+
+You will also find the "find_cycles.sql" query, which will list all cycles within a graph
+
+=head2 General Design
+
+I've done as much as possible as resuable modules, so that each part can be properly
+tested, and makes for cleaner scripts
+
+There's a test suite located in t/
 
 =cut
