@@ -11,7 +11,7 @@ use Challenge::Graph::Query::JSON;
 subtest "no graph_id" => sub {
     plan tests => 2;
 
-    my $json = path("$Bin/test_queries/no_graph_id.json")->slurp_utf8;
+    my $json = path("$Bin/test_data/05/no_graph_id.json")->slurp_utf8;
 
     eval {
         my $json_query = Challenge::Graph::Query::JSON->new(
@@ -33,7 +33,7 @@ subtest "no graph_id" => sub {
 subtest "missing required keys" => sub {
     plan tests => 4;
 
-    my $json = path("$Bin/test_queries/invalid_scheme.json")->slurp_utf8;
+    my $json = path("$Bin/test_data/05/invalid_scheme.json")->slurp_utf8;
 
     eval {
         my $json_query = Challenge::Graph::Query::JSON->new(
@@ -60,7 +60,7 @@ subtest "missing required keys" => sub {
 subtest 'valid' => sub {
     plan tests => 5;
 
-    my $json = path("$Bin/test_queries/valid.json")->slurp_utf8;
+    my $json = path("$Bin/test_data/05/valid.json")->slurp_utf8;
 
     my $json_query = Challenge::Graph::Query::JSON->new(
         json        => $json,

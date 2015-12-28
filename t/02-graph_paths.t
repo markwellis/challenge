@@ -9,7 +9,7 @@ use Challenge::Graph::XML;
 use Path::Tiny;
 
 {
-    my $xml = path("$Bin/test_graphs/02/simple.xml")->slurp_utf8;
+    my $xml = path("$Bin/test_data/02/simple.xml")->slurp_utf8;
 
     my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,
@@ -37,7 +37,7 @@ use Path::Tiny;
 }
 
 {
-    my $xml = path("$Bin/test_graphs/02/branched.xml")->slurp_utf8;
+    my $xml = path("$Bin/test_data/02/branched.xml")->slurp_utf8;
 
     my $graph_xml = Challenge::Graph::XML->new(
         xml => $xml,

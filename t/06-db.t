@@ -20,7 +20,7 @@ my $graph_db = Challenge::Graph::DB->new( $config->{db} );
 
 my @graphs;
 foreach ( qw/first second/ ) {
-    my $xml = path("$Bin/test_graphs/06/$_.xml")->slurp_utf8;
+    my $xml = path("$Bin/test_data/06/$_.xml")->slurp_utf8;
     my $graph_xml = Challenge::Graph::XML->new( xml => $xml );
     push @graphs, $graph_xml->graph;
 }
@@ -34,7 +34,7 @@ is @graphs, 2, "2 graphs";
     $graph_db->save( $graph );
 
 #load
-    my $loaded_graph = $graph_db->load( 'test' );
+    my $loaded_graph = $graph_db->load( 'test06' );
     compare_graphs( $graph, $loaded_graph );
 }
 
@@ -44,16 +44,18 @@ is @graphs, 2, "2 graphs";
     $graph_db->replace( $graph );
 
 #load
-    my $loaded_graph = $graph_db->load( 'test' );
+    my $loaded_graph = $graph_db->load( 'test06' );
     compare_graphs( $graph, $loaded_graph );
 }
 
-cleanup();
+END {
+    cleanup();
+}
 
 sub compare_graphs {
     my ( $graph, $loaded_graph ) = @_;
 
-    subtest "comapre graphs" => sub {
+    subtest "compare graphs" => sub {
         plan tests => 6;
 
         is $graph->name, $loaded_graph->name, "same name " . $graph->name;
@@ -72,6 +74,6 @@ sub compare_graphs {
 }
 
 sub cleanup {
-    $graph_db->delete( 'test' );
-    ok !$graph_db->load( 'test' ), "no test graph";
+    $graph_db->delete( 'test06' );
+    ok !$graph_db->load( 'test06' ), "no test graph";
 }
