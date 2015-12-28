@@ -1,0 +1,27 @@
+{
+    "graph_id" : "test07",
+    "queries": [
+       {
+           "paths" : {
+               "start" : "a",
+               "end"   : "e"
+           }
+       },
+       {
+           "cheapest" : {
+               "start" : "a",
+               "end"   : "c"
+           }
+       },
+       {
+           "paths"    : {
+              "start"  : "e",
+              "end"    : "c"
+           },
+           "cheapest" : {
+               "start" : "e",
+               "end"   : "d"
+           }
+       }
+   ]
+}

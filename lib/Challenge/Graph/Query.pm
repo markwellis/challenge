@@ -38,32 +38,27 @@ sub _solve {
 
     my @answers;
     foreach my $queries ( @{$self->queries} ) {
+        my $answer = {};
         foreach my $query ( @{$queries} ) {
             if ( $query->method eq 'cheapest' ) {
                 my $result = $graph->cheapest( $query->start, $query->end );
 
-                my $answer = {
-                    cheapest => {
-                        path  => $result || $self->false,
-                        from  => $query->start,
-                        to    => $query->end,
-                    }
+                $answer->{cheapest} = {
+                    path  => $result || $self->false,
+                    from  => $query->start,
+                    to    => $query->end,
                 };
-
-                push @answers, $answer;
             }
             if ( $query->method eq 'paths' ) {
                 my $result = $graph->paths( $query->start, $query->end );
-                my $answer = {
-                    paths => {
-                        paths => $result,
-                        from  => $query->start,
-                        to    => $query->end,
-                    }
+                $answer->{paths} = {
+                    paths => $result,
+                    from  => $query->start,
+                    to    => $query->end,
                 };
-                push @answers, $answer;
             }
         }
+        push @answers, $answer;
     }
 
     return\@answers;
